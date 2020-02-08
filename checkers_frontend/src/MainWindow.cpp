@@ -34,7 +34,10 @@ MainWindow::MainWindow(const GameState& gameState, QWidget* parent)
 
     connect(ui->loadAI, &QPushButton::clicked, [this]() {
         const auto loadedFile = QFileDialog::getOpenFileName(nullptr, "Saved AI file");
-        emit signalLoadMetrics(loadedFile.toStdString());
+        if (!loadedFile.isEmpty())
+        {
+            emit signalLoadMetrics(loadedFile.toStdString());
+        }
     });
 
     setWindowTitle("Genetic checkers");

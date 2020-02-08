@@ -84,12 +84,21 @@ void FrontendController::finishGame(GameResult gameResult)
 
 void FrontendController::loadAI(const std::string& fileName)
 {
-    auto heuristics = File::deserialize(fileName);
+    Metrics metrics;
+    try
+    {
+        metrics = File::deserialize(fileName);
+    }
+    catch (const std::exception& e)
+    {
+        mainWindow.pushInfo(e.what());
+        return;
+    }
     ai.reset(new Heuristics{strategy,
                             metricsCalculator,
-                            std::move(heuristics.metricsEarlyGame),
-                            std::move(heuristics.metricsMidGame),
-                            std::move(heuristics.metricsLateGame),
+                            std::move(metrics.metricsEarlyGame),
+                            std::move(metrics.metricsMidGame),
+                            std::move(metrics.metricsLateGame),
                             totalPlayerFiguresNumber / 3,
                             2 * totalPlayerFiguresNumber / 3,
                             mainWindow.minimaxDeep()});
