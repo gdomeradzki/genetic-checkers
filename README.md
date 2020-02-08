@@ -70,11 +70,13 @@ genetic-checkers/
 Please feel free to create Pull Request
 
 ToDo list:
+ * [ ] Generate and commit demonstrational AI file
  * [ ] Get rid of hardcoded genetic algorithm parameters - make them program parameters
  * [ ] Make one target for all UT tests
  * [ ] Add possibility to load two, different AI in frontend
  * [ ] Do performance improvements (sanitizers etc.)
  * [ ] Check code in terms of memory leaks (by valgrind for example)
+ * [ ] Add ut coverage tool
  
  ## Contact
 [grzegorz@domeradzki.com](mailto:grzegorz@domeradzki.com)
