@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pawn_black.png</file>
+        <file>pawn_black_special.png</file>
+        <file>pawn_white.png</file>
+        <file>pawn_white_special.png</file>
+    </qresource>
+</RCC>
