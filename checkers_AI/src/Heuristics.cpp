@@ -7,9 +7,9 @@ Heuristics::Heuristics(
     MetricsWithFactors metricsEarlyGame,
     MetricsWithFactors metricsMidGame,
     MetricsWithFactors metricsLateGame,
-    int earlyGameFiguresLimit,
-    int midGameFiguresLimit,
-    int minimaxDepth)
+    unsigned int earlyGameFiguresLimit,
+    unsigned int midGameFiguresLimit,
+    unsigned int minimaxDepth)
     : m_strategy{strategy}
     , m_metricsCalculator{metricsCalculator}
     , m_metricsEarlyGame{std::move(metricsEarlyGame)}

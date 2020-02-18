@@ -94,7 +94,7 @@ StrategyType MainWindow::getBlackStrategy() const
     return strategyToStringMapping.at(ui->blackPlayerStrategy->currentText().toStdString());
 }
 
-int MainWindow::minimaxDeep() const
+unsigned int MainWindow::minimaxDeep() const
 {
     return ui->minimaxDeep->value();
 }

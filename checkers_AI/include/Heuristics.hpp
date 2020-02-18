@@ -16,13 +16,13 @@ public:
         MetricsWithFactors metricsEarlyGame,
         MetricsWithFactors metricsMidGame,
         MetricsWithFactors metricsLateGame,
-        int earlyGameFiguresLimit,
-        int midGameFiguresLimit,
-        int minimaxDepth);
+        unsigned int earlyGameFiguresLimit,
+        unsigned int midGameFiguresLimit,
+        unsigned int minimaxDepth);
 
     ~Heuristics() = default;
 
-    Heuristics& operator=(const Heuristics&)= delete;
+    Heuristics& operator=(const Heuristics&) = delete;
     bool operator==(const Heuristics&) const;
 
     GameStateWithMove getMove(const GameState&, FigureColor);
@@ -33,7 +33,7 @@ private:
     const MetricsWithFactors m_metricsEarlyGame;
     const MetricsWithFactors m_metricsMidGame;
     const MetricsWithFactors m_metricsLateGame;
-    const int m_earlyGameFiguresLimit;
-    const int m_midGameFiguresLimit;
-    const int m_minimaxDepth;
+    const unsigned int m_earlyGameFiguresLimit;
+    const unsigned int m_midGameFiguresLimit;
+    const unsigned int m_minimaxDepth;
 };

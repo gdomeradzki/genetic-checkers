@@ -14,7 +14,7 @@ GameState::GameState()
     m_gameState = Board{};
     for (int row = 0; row < rowsCount(); row++)
     {
-        for (int col = 0; col < BOARD_SIZE; col += 2)
+        for (auto col = 0u; col < BOARD_SIZE; col += 2)
         {
             m_gameState[row][col + row % 2] = FigureState{FigureColor::White};
             m_gameState[BOARD_SIZE - row - 1][col + (row + 1) % 2] = FigureState{FigureColor::Black};

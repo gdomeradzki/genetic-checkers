@@ -14,10 +14,10 @@ class GeneticAlgorithm
 {
 public:
     GeneticAlgorithm(
-        int populationLimit,
-        int regenerationLimit,
-        int mutationsLimit,
-        int minimaxDeep,
+        unsigned int populationLimit,
+        unsigned int regenerationLimit,
+        unsigned int mutationsLimit,
+        unsigned int minimaxDeep,
         IParrarelGamePlay& pararrelGameplay,
         IRandomEngine& randomEngine,
         IStrategy& strategy,
@@ -42,10 +42,10 @@ private:
 
     Population population;
 
-    const int populationLimit;
-    const int regenerationLimit;
-    const int mutationsLimit;
-    const int minimaxDeep;
+    const unsigned int populationLimit;
+    const unsigned int regenerationLimit;
+    const unsigned int mutationsLimit;
+    const unsigned int minimaxDeep;
 
     IParrarelGamePlay& pararrelGameplay;
     IRandomEngine& randomEngine;

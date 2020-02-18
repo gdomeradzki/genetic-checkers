@@ -3,7 +3,7 @@
 #include <set>
 #include "GameState.hpp"
 
-enum class Metric
+enum class Metric : unsigned int
 {
     PawnsNumber,
     KingsNumber,
@@ -31,11 +31,11 @@ enum class Metric
 struct MetricFactor
 {
     MetricFactor(Metric metric) : metric{metric} {}
-    MetricFactor(Metric metric, int factor) : metric{metric}, factor{factor} {}
+    MetricFactor(Metric metric, unsigned int factor) : metric{metric}, factor{factor} {}
     Metric metric;
-    int factor{1};
+    unsigned int factor{1};
     bool operator<(const MetricFactor& other) const { return metric < other.metric; }
-    bool operator==(const MetricFactor& other) const { return metric == metric && factor == factor; }
+    bool operator==(const MetricFactor& other) const { return metric == other.metric && factor == other.factor; }
 };
 
 using MetricsWithFactors = std::set<MetricFactor>;

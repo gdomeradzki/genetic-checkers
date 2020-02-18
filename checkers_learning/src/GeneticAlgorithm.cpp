@@ -1,5 +1,6 @@
 #include "GeneticAlgorithm.hpp"
 
+#include <algorithm>
 #include <assert.h>
 #include <random>
 
@@ -9,10 +10,10 @@
 #include "Strategy.hpp"
 
 GeneticAlgorithm::GeneticAlgorithm(
-    int populationLimit,
-    int regenerationLimit,
-    int mutationsLimit,
-    int minimaxDeep,
+    unsigned int populationLimit,
+    unsigned int regenerationLimit,
+    unsigned int mutationsLimit,
+    unsigned int minimaxDeep,
     IParrarelGamePlay& pararrelGameplay,
     IRandomEngine& randomEngine,
     IStrategy& strategy,
@@ -48,7 +49,7 @@ void GeneticAlgorithm::createRandomPopulation()
     Population newPopulation;
     newPopulation.resize(populationLimit);
 
-    for (int i = 0; i < populationLimit; i++)
+    for (auto i = 0u; i < populationLimit; i++)
     {
         for (auto& gene : newPopulation.at(i).genes)
         {
@@ -112,7 +113,7 @@ void GeneticAlgorithm::crossbreeding()
 
 void GeneticAlgorithm::mutation()
 {
-    for (int i = 0; i < mutationsLimit; i++)
+    for (auto i = 0u; i < mutationsLimit; i++)
     {
         const int genotypeIndex = randomEngine.getRandomValue(0, populationLimit - 1);
         auto& genotype = population[genotypeIndex];
@@ -169,9 +170,9 @@ void GeneticAlgorithm::freeForAll()
     BattleList battleList;
     const auto populationSize = population.size();
     battleList.reserve(populationSize * (populationSize - 1));
-    for (int whitePlayerIterator = 0; whitePlayerIterator < populationSize; whitePlayerIterator++)
+    for (auto whitePlayerIterator = 0u; whitePlayerIterator < populationSize; whitePlayerIterator++)
     {
-        for (int blackPlayerIterator = 0; blackPlayerIterator < populationSize; blackPlayerIterator++)
+        for (auto blackPlayerIterator = 0u; blackPlayerIterator < populationSize; blackPlayerIterator++)
         {
             if (whitePlayerIterator == blackPlayerIterator)
             {

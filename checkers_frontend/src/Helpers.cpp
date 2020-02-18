@@ -9,8 +9,8 @@ Metrics File::deserialize(const std::string& filename)
 
     std::ifstream ifstream(filename, std::ofstream::in);
     char gameStage;
-    int metricNumber;
-    int factor;
+    unsigned int metricNumber;
+    unsigned int factor;
 
     MetricsWithFactors earlyGameMetrics;
     MetricsWithFactors midGameMetrics;

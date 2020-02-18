@@ -89,9 +89,9 @@ struct GeneticAlgorithmTests : public ::testing::Test
     BattleList prepareBattleList()
     {
         BattleList expectedBattleList;
-        for (int i = 0; i < populationLimit; i++)
+        for (auto i = 0u; i < populationLimit; i++)
         {
-            for (int j = 0; j < populationLimit; j++)
+            for (auto j = 0u; j < populationLimit; j++)
             {
                 if (i == j) // Shouldn't play against itself
                 {
@@ -100,30 +100,30 @@ struct GeneticAlgorithmTests : public ::testing::Test
                 MetricsWithFactors whiteEarlyGameMetrics;
                 MetricsWithFactors whiteMidGameMetrics;
                 MetricsWithFactors whiteLateGameMetrics;
-                for (int k = 0; k < metricsNumber; k++)
+                for (auto k = 0u; k < metricsNumber; k++)
                 {
-                    whiteEarlyGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (i + 1) * 100 + k});
+                    whiteEarlyGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (i + 1u) * 100 + k});
                 }
-                for (int k = 0; k < metricsNumber; k++)
+                for (auto k = 0u; k < metricsNumber; k++)
                 {
                     whiteMidGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (i + 1) * 100 + k});
                 }
-                for (int k = 0; k < metricsNumber; k++)
+                for (auto k = 0u; k < metricsNumber; k++)
                 {
                     whiteLateGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (i + 1) * 100 + k});
                 }
                 MetricsWithFactors blackEarlyGameMetrics;
                 MetricsWithFactors blackMidGameMetrics;
                 MetricsWithFactors blackLateGameMetrics;
-                for (int k = 0; k < metricsNumber; k++)
+                for (auto k = 0u; k < metricsNumber; k++)
                 {
                     blackEarlyGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (j + 1) * 100 + k});
                 }
-                for (int k = 0; k < metricsNumber; k++)
+                for (auto k = 0u; k < metricsNumber; k++)
                 {
                     blackMidGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (j + 1) * 100 + k});
                 }
-                for (int k = 0; k < metricsNumber; k++)
+                for (int k = 0u; k < metricsNumber; k++)
                 {
                     blackLateGameMetrics.insert(MetricFactor{static_cast<Metric>(k), (j + 1) * 100 + k});
                 }
@@ -199,7 +199,6 @@ TEST_F(GeneticAlgorithmTests, mainLoop)
             InvokeArgument<1>(battle3),
             InvokeWithoutArgs(checkPopulationBeforeSelection)));
 
-    auto checkPopulationAfterSelectionBeforeCrossBreeding = [this]() -> int { return 1; };
     enum class AlgorithmStatus
     {
         CrossDuplicatedWhenFirstCall,
@@ -292,6 +291,7 @@ TEST_F(GeneticAlgorithmTests, mainLoop)
                 }
             }
         }
+        return 0;
     };
     EXPECT_CALL(randomEngineMock, getRandomValue(_, _)).WillRepeatedly(Invoke(randomCallsExpectations));
     sut.run(1);

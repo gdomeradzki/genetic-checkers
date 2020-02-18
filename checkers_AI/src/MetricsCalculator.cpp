@@ -181,7 +181,7 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     int maxDistanceSum = 0;
     int minDistanceSum = 0;
     constexpr auto pawnsPerRow = BOARD_SIZE / 2;
-    for (int i = 0; i < whitePawns.size(); i++)
+    for (size_t i = 0; i < whitePawns.size(); i++)
     {
         minDistanceSum += (i / pawnsPerRow);
         playerTotalSum += whitePawns[i].position.row;
@@ -193,7 +193,7 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     maxDistanceSum = 0;
     playerTotalSum = 0;
     minDistanceSum = 0;
-    for (int i = 0; i < blackPawns.size(); i++)
+    for (size_t i = 0; i < blackPawns.size(); i++)
     {
         minDistanceSum += (i / pawnsPerRow) + 1;
         playerTotalSum += blackPawns[i].position.row;

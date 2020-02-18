@@ -32,7 +32,7 @@ public:
     StrategyType getWhiteStrategy() const;
     StrategyType getBlackStrategy() const;
 
-    int minimaxDeep() const;
+    unsigned int minimaxDeep() const;
     void pushInfo(const QString& info);
 signals:
 

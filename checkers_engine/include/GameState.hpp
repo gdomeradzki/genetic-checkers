@@ -7,7 +7,7 @@
 #include "PawnState.hpp"
 #include "Types.hpp"
 
-constexpr auto BOARD_SIZE = 8u;
+constexpr auto BOARD_SIZE = 8;
 constexpr auto totalPlayerFiguresNumber = BOARD_SIZE * (BOARD_SIZE - 2) / 4;
 
 struct Figure

@@ -9,13 +9,13 @@
 #include "Helpers.hpp"
 using namespace std;
 
-int main(int argc, char* argv[])
+int main(int, char*[])
 {
-    int populationLimit = 10;
-    int regenerationLimit = 5;
-    int mutatiosLimit = 2;
-    int minimaxDeep = 2;
-    int generationsNumber = 5;
+    auto populationLimit = 10u;
+    auto regenerationLimit = 5u;
+    auto mutatiosLimit = 2u;
+    auto minimaxDeep = 2u;
+    auto generationsNumber = 5u;
     int threadsNumber = std::thread::hardware_concurrency();
     const std::string resultFile = "bestGenotype.txt";
 

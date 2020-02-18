@@ -12,7 +12,7 @@ struct Gene
     Gene(GameStage gameStage, Metric metric) : metric(metric), gameStage(gameStage) {}
     Metric metric;
     GameStage gameStage;
-    int factor{0};
+    unsigned int factor{0};
 };
 
 constexpr auto gameStageNumber = 3;

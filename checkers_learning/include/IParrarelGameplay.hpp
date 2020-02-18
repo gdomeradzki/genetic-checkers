@@ -9,8 +9,8 @@ struct Battle
 {
     Heuristics whitePlayerStrategy;
     Heuristics blackPlayerStrategy;
-    int whitePlayerId;
-    int blackPlayerId;
+    unsigned int whitePlayerId;
+    unsigned int blackPlayerId;
     GameResult result;
 };
 
