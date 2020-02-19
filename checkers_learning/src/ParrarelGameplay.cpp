@@ -19,7 +19,8 @@ void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback
     Logger::log();
     for (int i = 0; i < maxNumberOfThreads; i++)
     {
-        std::thread t(&ParrarelGamePlay::threadLoop, this);
+        auto threadWrapper = [this](int threadId) { threadLoop(threadId); };
+        std::thread t(threadWrapper, i);
         threads.emplace_back(std::move(t));
     }
     for (int i = 0; i < maxNumberOfThreads; i++)
@@ -32,13 +33,15 @@ void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback
     Logger::log("");
 }
 
-void ParrarelGamePlay::threadLoop()
+void ParrarelGamePlay::threadLoop(int threadId)
 {
+    Logger::log("Thread #", threadId, " starts");
     while (true)
     {
         auto battle = fetchNextBattle();
         if (!battle)
         {
+            Logger::log("Thread #", threadId, " finishes");
             break;
         }
         GameState gameState;
@@ -58,13 +61,13 @@ void ParrarelGamePlay::threadLoop()
 std::optional<Battle> ParrarelGamePlay::fetchNextBattle()
 {
     const std::lock_guard lockGuard{mutex};
-    if (battlesLeft.size() % 10 == 0)
-    {
-        Logger::logRepeatLine("Battles left: ", battlesLeft.size());
-    }
     if (battlesLeft.empty())
     {
         return std::nullopt;
+    }
+    if (battlesLeft.size() % 10 == 0)
+    {
+        Logger::log("Battles left: ", battlesLeft.size());
     }
     const auto lastBattle = battlesLeft.back();
     battlesLeft.pop_back();

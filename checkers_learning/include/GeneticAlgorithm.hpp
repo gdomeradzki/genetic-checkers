@@ -2,6 +2,8 @@
 
 #include <array>
 #include <memory>
+#include <mutex>
+
 #include "Heuristics.hpp"
 #include "IParrarelGameplay.hpp"
 #include "IRandomEngine.hpp"
@@ -41,6 +43,7 @@ private:
     Genotype crossBreed(const Genotype&, const Genotype&) const;
 
     Population population;
+    std::mutex finishCallbackMutex;
 
     const unsigned int populationLimit;
     const unsigned int regenerationLimit;
