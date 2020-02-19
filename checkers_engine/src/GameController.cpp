@@ -7,7 +7,7 @@ namespace
 {
 inline bool isInBoard(Position position)
 {
-    return position.col >= 0 && position.col < BOARD_SIZE && position.row >= 0 && position.row < BOARD_SIZE;
+    return position.col >= 0 && position.col < boardSize && position.row >= 0 && position.row < boardSize;
 }
 } // namespace
 
@@ -124,7 +124,7 @@ void GameController::findJump(
         {
             for (const auto colWayFactor : {-1, 1})
             {
-                for (int i = 1; i < BOARD_SIZE; i++)
+                for (int i = 1; i < boardSize; i++)
                 {
                     const auto beatenPosition = Position{jumpingPawn.position.row + i * rowWayFactor,
                                                          jumpingPawn.position.col + i * colWayFactor};
@@ -142,7 +142,7 @@ void GameController::findJump(
                         break;
                     }
                     bool beatenBlocked{false};
-                    for (int j = i + 1; j < BOARD_SIZE; j++)
+                    for (int j = i + 1; j < boardSize; j++)
                     {
                         const auto positionBeyond = Position{jumpingPawn.position.row + j * rowWayFactor,
                                                              jumpingPawn.position.col + j * colWayFactor};
@@ -210,7 +210,7 @@ std::vector<GameStateWithMove> GameController::getAvailableMoves(const Figure& p
         {
             for (const auto colWayFactor : {-1, 1})
             {
-                for (int i = 1; i < BOARD_SIZE; i++)
+                for (int i = 1; i < boardSize; i++)
                 {
                     const auto movePosition =
                         Position{pawn.position.row + rowWayFactor * i, pawn.position.col + colWayFactor * i};
@@ -241,7 +241,7 @@ bool GameController::isKingChange(FigureState pawnState, Position position) cons
     }
     if (pawnState.color == FigureColor::White)
     {
-        if (position.row == BOARD_SIZE - 1)
+        if (position.row == boardSize - 1)
         {
             return true;
         }

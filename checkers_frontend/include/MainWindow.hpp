@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(const GameState&, QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
     void repaint();
     void syncTemporaryState();

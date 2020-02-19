@@ -30,7 +30,7 @@ enum class Metric : unsigned int
 };
 struct MetricFactor
 {
-    MetricFactor(Metric metric) : metric{metric} {}
+    explicit MetricFactor(Metric metric) : metric{metric} {}
     MetricFactor(Metric metric, unsigned int factor) : metric{metric}, factor{factor} {}
     Metric metric;
     unsigned int factor{1};
@@ -42,5 +42,6 @@ using MetricsWithFactors = std::set<MetricFactor>;
 class IMetricsCalculator
 {
 public:
+    virtual ~IMetricsCalculator() = default;
     virtual int evaluate(const MetricsWithFactors& metricWithFactors, const GameState&, FigureColor) const = 0;
 };

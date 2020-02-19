@@ -5,11 +5,9 @@
 class StrategyMock : public IStrategy
 {
 public:
-    MOCK_METHOD(
-        GameStateWithMove,
-        getMiniMaxMove,
-        (const GameState&, EvaluationFunction, FigureColor, int),
-        (const, override));
+    // clang-format off
+    MOCK_METHOD(GameStateWithMove, getMiniMaxMove, (const GameState&, EvaluationFunction, FigureColor, int), (const, override));
+    // clang-format on
     MOCK_METHOD(GameStateWithMove, getRandomMove, (const std::vector<GameStateWithMove>&), (const, override));
 };
 class CalculatorMock : public IMetricsCalculator

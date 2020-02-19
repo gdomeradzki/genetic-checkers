@@ -7,7 +7,7 @@ static std::uniform_int_distribution<> dis(0, INT_MAX);
 class RandomEngine : public IRandomEngine
 {
 public:
-    RandomEngine(std::mt19937& gen);
+    explicit RandomEngine(std::mt19937& gen);
     int getRandomValue(int from, int to) const override;
 
 private:

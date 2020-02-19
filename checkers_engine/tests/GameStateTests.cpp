@@ -19,7 +19,7 @@ TEST(GameState, ShouldHaveBoardDefaultContructedWhitePawns)
 TEST(GameState, ShouldHaveBoardDefaultContructedBlackPawns)
 {
     GameState state;
-    for (int row = BOARD_SIZE - 1; row >= BOARD_SIZE - 3; row--)
+    for (int row = boardSize - 1; row >= boardSize - 3; row--)
     {
         for (int col = 0; col < 8; col += 2)
         {
@@ -42,7 +42,7 @@ TEST(GameState, ShouldHaveBoardDefaultContructedEmptyFields)
         }
     }
 
-    for (int row = BOARD_SIZE - 1; row >= BOARD_SIZE - 3; row--)
+    for (int row = boardSize - 1; row >= boardSize - 3; row--)
     {
         for (int col = 0; col < 8; col += 2)
         {

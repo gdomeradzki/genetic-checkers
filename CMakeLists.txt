@@ -4,7 +4,13 @@ project(genetic-checkers)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/googletest")
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+set(CMAKE_CXX_CLANG_TIDY
+  clang-tidy;
+  -header-filter=*include/*;
+  -warnings-as-errors=*;)
+
+add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-gnu-zero-variadic-macro-arguments)
+
 
 add_subdirectory(checkers_engine)
 add_subdirectory(checkers_frontend)

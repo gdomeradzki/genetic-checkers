@@ -138,7 +138,7 @@ TEST(GameController, PawnsBeatsOnly)
     //    0-----
     //     012345
     Board board{};
-    board[1][3] = {FigureColor::White};
+    board[1][3] = FigureState{FigureColor::White};
     board[2][2] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[2][4] = FigureState{FigureType::Pawn, FigureColor::Black};
     GameState gameState(std::move(board));
@@ -170,7 +170,7 @@ TEST(GameController, PawnsBeatBlocked)
     //    0o-----
     //     012345
     Board board{};
-    board[0][0] = {FigureColor::White};
+    board[0][0] = FigureState{FigureColor::White};
     board[1][1] = FigureState{FigureType::Pawn, FigureColor::Black};
     GameState gameState(std::move(board));
     GameController controller(gameState);
@@ -186,7 +186,7 @@ TEST(GameController, PawnsMultiBeats)
     //    0o------
     //     0123456
     Board board{};
-    board[0][0] = {FigureColor::White};
+    board[0][0] = FigureState{FigureColor::White};
     board[1][1] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][3] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][5] = FigureState{FigureType::Pawn, FigureColor::Black};
@@ -210,7 +210,7 @@ TEST(GameController, PawnsMultiBeatsSelectsStronger)
     //    0o------
     //     0123456
     Board board{};
-    board[0][0] = {FigureColor::White};
+    board[0][0] = FigureState{FigureColor::White};
     board[1][1] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][3] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][5] = FigureState{FigureType::Pawn, FigureColor::Black};
@@ -236,7 +236,7 @@ TEST(GameController, PawnsMultiBeatsMultiOptions)
     //    0o------
     //     0123456
     Board board{};
-    board[0][0] = {FigureColor::White};
+    board[0][0] = FigureState{FigureColor::White};
     board[1][1] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][3] = FigureState{FigureType::Pawn, FigureColor::Black};
     board[1][5] = FigureState{FigureType::Pawn, FigureColor::Black};

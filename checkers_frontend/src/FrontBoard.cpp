@@ -37,13 +37,13 @@ void FrontBoard::paintEvent(QPaintEvent* event)
 
     QPainter painter(this);
     const auto space = getCurrentSpace();
-    for (int i = 0; i < BOARD_SIZE + 1; i++)
+    for (int i = 0; i < boardSize + 1; i++)
     {
         const QPoint hLineBegin(0, i * space);
-        const QPoint hLineEnd(space * BOARD_SIZE, i * space);
+        const QPoint hLineEnd(space * boardSize, i * space);
 
         const QPoint vLineBegin(i * space, 0);
-        const QPoint vLineEnd(i * space, space * BOARD_SIZE);
+        const QPoint vLineEnd(i * space, space * boardSize);
 
         painter.drawLine(hLineBegin, hLineEnd);
         painter.drawLine(vLineBegin, vLineEnd);
@@ -57,9 +57,9 @@ void FrontBoard::paintEvent(QPaintEvent* event)
         drawPawn(pawn.state.color, pawn.state.type, pawn.position, space, &painter);
     }
 
-    for (int row = 0; row < BOARD_SIZE; row++)
+    for (int row = 0; row < boardSize; row++)
     {
-        for (int col = 0; col < BOARD_SIZE; col++)
+        for (int col = 0; col < boardSize; col++)
         {
             const auto point = getPointByPosition({row, col});
             painter.drawText(point.x(), point.y(), space, space, Qt::AlignLeft, QString("%1x%2").arg(col).arg(row));
@@ -179,16 +179,16 @@ void FrontBoard::drawPawn(FigureColor color, FigureType type, Position position,
 QPoint FrontBoard::getPointByPosition(const Position& position) const
 {
     const auto space = getCurrentSpace();
-    return QPoint{position.col * space, (BOARD_SIZE - 1 - position.row) * space};
+    return QPoint{position.col * space, (boardSize - 1 - position.row) * space};
 }
 
 Position FrontBoard::getPositionByPoint(const QPoint& point) const
 {
     const auto space = getCurrentSpace();
-    return Position{BOARD_SIZE - 1 - point.y() / space, point.x() / space};
+    return Position{boardSize - 1 - point.y() / space, point.x() / space};
 }
 
 FrontBoard::Space FrontBoard::getCurrentSpace() const
 {
-    return qMin(size().height(), size().width()) / BOARD_SIZE;
+    return qMin(size().height(), size().width()) / boardSize;
 }

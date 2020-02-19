@@ -7,7 +7,7 @@
 class ParrarelGamePlay : public IParrarelGamePlay
 {
 public:
-    ParrarelGamePlay(int maxNumberOfThreads);
+    explicit ParrarelGamePlay(int maxNumberOfThreads);
 
     void play(BattleList, BattleFinishCallback) override;
 

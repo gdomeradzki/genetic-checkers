@@ -61,8 +61,7 @@ int kingsNumberMetric(Figures player, Figures opponent)
 
 bool isSafePosition(Position position)
 {
-    return position.row == 0 || position.row == (BOARD_SIZE - 1) || position.col == 0 ||
-        position.col == (BOARD_SIZE - 1);
+    return position.row == 0 || position.row == (boardSize - 1) || position.col == 0 || position.col == (boardSize - 1);
 }
 
 int safePawnsMetric(Figures player, Figures opponent)
@@ -90,7 +89,7 @@ int safeKingsMetric(Figures player, Figures opponent)
 
 bool isCenterPosition(Position position)
 {
-    return position.row == BOARD_SIZE / 2 || position.row == (BOARD_SIZE / 2 - 1);
+    return position.row == boardSize / 2 || position.row == (boardSize / 2 - 1);
 }
 
 int centerPawnsMetric(Figures player, Figures opponent)
@@ -180,12 +179,12 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     int playerTotalSum = 0;
     int maxDistanceSum = 0;
     int minDistanceSum = 0;
-    constexpr auto pawnsPerRow = BOARD_SIZE / 2;
+    constexpr auto pawnsPerRow = boardSize / 2;
     for (size_t i = 0; i < whitePawns.size(); i++)
     {
         minDistanceSum += (i / pawnsPerRow);
         playerTotalSum += whitePawns[i].position.row;
-        maxDistanceSum += (BOARD_SIZE - 2) - (i / pawnsPerRow);
+        maxDistanceSum += (boardSize - 2) - (i / pawnsPerRow);
     }
     const double whiteFactor =
         static_cast<double>(playerTotalSum - minDistanceSum) / static_cast<double>(maxDistanceSum - minDistanceSum);
@@ -197,7 +196,7 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     {
         minDistanceSum += (i / pawnsPerRow) + 1;
         playerTotalSum += blackPawns[i].position.row;
-        maxDistanceSum += (BOARD_SIZE - 1) - (i / pawnsPerRow);
+        maxDistanceSum += (boardSize - 1) - (i / pawnsPerRow);
     }
     const double blackFactor =
         static_cast<double>(maxDistanceSum - playerTotalSum) / static_cast<double>(maxDistanceSum - minDistanceSum);
@@ -219,12 +218,12 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
 }
 int numberOfUnoccupiedFieldsOnPromotionLineMetric(FigureColor playerColor, const GameState& gameState)
 {
-    constexpr auto maxPossibleUnoccupiedFields = BOARD_SIZE / 2;
+    constexpr auto maxPossibleUnoccupiedFields = boardSize / 2;
     int whitePlayerUnoccupiedFields = 0;
     int blackPlayerUnoccupiedFields = 0;
-    for (int i = 0; i < BOARD_SIZE; i += 2)
+    for (int i = 0; i < boardSize; i += 2)
     {
-        if (gameState.isFree(Position{BOARD_SIZE - 1, i + 1}))
+        if (gameState.isFree(Position{boardSize - 1, i + 1}))
         {
             whitePlayerUnoccupiedFields++;
         }
@@ -247,13 +246,13 @@ int defenderFiguresMetric(Figures player, Figures opponent)
     const auto isPlayerWhite = player.at(0).state.color == FigureColor::White;
     if (isPlayerWhite)
     {
-        constrainFigures(player, [](const Figure& figure) { return figure.position.row > (BOARD_SIZE / 2 - 2); });
-        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row < (BOARD_SIZE / 2 + 1); });
+        constrainFigures(player, [](const Figure& figure) { return figure.position.row > (boardSize / 2 - 2); });
+        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row < (boardSize / 2 + 1); });
     }
     else
     {
-        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row > (BOARD_SIZE / 2 - 2); });
-        constrainFigures(player, [](const Figure& figure) { return figure.position.row < (BOARD_SIZE / 2 + 1); });
+        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row > (boardSize / 2 - 2); });
+        constrainFigures(player, [](const Figure& figure) { return figure.position.row < (boardSize / 2 + 1); });
     }
     return calcFiguresRatio(totalPlayerFiguresNumber, player.size(), opponent.size());
 }
@@ -262,13 +261,13 @@ int attackingFiguresMetric(Figures player, Figures opponent)
     const auto isPlayerWhite = player.at(0).state.color == FigureColor::White;
     if (!isPlayerWhite)
     {
-        constrainFigures(player, [](const Figure& figure) { return figure.position.row > (BOARD_SIZE / 2 - 2); });
-        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row < (BOARD_SIZE / 2 + 1); });
+        constrainFigures(player, [](const Figure& figure) { return figure.position.row > (boardSize / 2 - 2); });
+        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row < (boardSize / 2 + 1); });
     }
     else
     {
-        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row > (BOARD_SIZE / 2 - 2); });
-        constrainFigures(player, [](const Figure& figure) { return figure.position.row < (BOARD_SIZE / 2 + 1); });
+        constrainFigures(opponent, [](const Figure& figure) { return figure.position.row > (boardSize / 2 - 2); });
+        constrainFigures(player, [](const Figure& figure) { return figure.position.row < (boardSize / 2 + 1); });
     }
     return calcFiguresRatio(totalPlayerFiguresNumber, player.size(), opponent.size());
 }
@@ -290,11 +289,11 @@ int figuresOnDiagonalMetric(Figures player, Figures opponent, FigureType type, i
 }
 int pawnsOnDiagonalMetric(Figures player, Figures opponent)
 {
-    return figuresOnDiagonalMetric(player, opponent, FigureType::Pawn, BOARD_SIZE - 1);
+    return figuresOnDiagonalMetric(player, opponent, FigureType::Pawn, boardSize - 1);
 }
 int kingsOnDiagonalMetric(Figures player, Figures opponent)
 {
-    return figuresOnDiagonalMetric(player, opponent, FigureType::King, BOARD_SIZE);
+    return figuresOnDiagonalMetric(player, opponent, FigureType::King, boardSize);
 }
 
 bool isDoubleDiagonalPosition(Position position)

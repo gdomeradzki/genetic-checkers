@@ -7,8 +7,8 @@
 #include "PawnState.hpp"
 #include "Types.hpp"
 
-constexpr auto BOARD_SIZE = 8;
-constexpr auto totalPlayerFiguresNumber = BOARD_SIZE * (BOARD_SIZE - 2) / 4;
+constexpr auto boardSize = 8;
+constexpr auto totalPlayerFiguresNumber = boardSize * (boardSize - 2) / 4;
 
 struct Figure
 {
@@ -16,13 +16,13 @@ struct Figure
     Position position;
 };
 
-using Board = std::array<std::array<std::optional<FigureState>, BOARD_SIZE>, BOARD_SIZE>;
+using Board = std::array<std::array<std::optional<FigureState>, boardSize>, boardSize>;
 using Figures = std::vector<Figure>;
 class GameState
 {
 public:
     GameState();
-    GameState(Board&& board);
+    explicit GameState(Board&& board);
     void removePawn(const Position&);
     void movePawn(const Position&, const Position&);
     void changePawnType(const Position&, FigureType);
@@ -34,5 +34,5 @@ public:
     bool operator==(const GameState&) const;
 
 private:
-    Board m_gameState;
+    Board gameState;
 };

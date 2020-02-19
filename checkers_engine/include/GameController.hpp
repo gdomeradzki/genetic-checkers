@@ -13,7 +13,7 @@ struct GameStateWithMove
 class GameController
 {
 public:
-    GameController(const GameState&);
+    explicit GameController(const GameState&);
 
     std::vector<GameStateWithMove> getPossibleMoves(FigureColor) const;
 

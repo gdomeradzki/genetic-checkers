@@ -9,8 +9,8 @@
 #include <map>
 #include "FrontBoard.hpp"
 
-constexpr auto HUMAN_STRING = "Human";
-static const std::map<std::string, StrategyType> strategyToStringMapping = {{HUMAN_STRING, StrategyType::Human},
+constexpr auto humanString = "Human";
+static const std::map<std::string, StrategyType> strategyToStringMapping = {{humanString, StrategyType::Human},
                                                                             {"AI", StrategyType::Ai}};
 
 MainWindow::MainWindow(const GameState& gameState, QWidget* parent)
@@ -29,7 +29,7 @@ MainWindow::MainWindow(const GameState& gameState, QWidget* parent)
     {
         ui->blackPlayerStrategy->addItem(strategy.first.c_str());
         ui->whitePlayerStrategy->addItem(strategy.first.c_str());
-        ui->whitePlayerStrategy->setCurrentText(HUMAN_STRING);
+        ui->whitePlayerStrategy->setCurrentText(humanString);
     }
 
     connect(ui->loadAI, &QPushButton::clicked, [this]() {

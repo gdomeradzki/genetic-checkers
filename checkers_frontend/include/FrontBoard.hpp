@@ -23,14 +23,14 @@ class FrontBoard : public QWidget
 
 public:
     explicit FrontBoard(const GameState&, QWidget* parent = nullptr);
-    virtual ~FrontBoard();
+    ~FrontBoard() override;
 
-    bool event(QEvent* e);
+    bool event(QEvent* e) override;
 
-    void paintEvent(QPaintEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    void dragEnterEvent(QDragEnterEvent* event);
-    void dropEvent(QDropEvent* event);
+    void paintEvent(QPaintEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
     void blockPawnMove(FigureColor color, bool block);
 
     void syncTemporaryState();

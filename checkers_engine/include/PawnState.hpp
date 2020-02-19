@@ -18,7 +18,7 @@ namespace utils
 struct FigureState
 {
     FigureState() : type(FigureType::Pawn), color(FigureColor::White) {}
-    FigureState(FigureColor color) : type(FigureType::Pawn), color(color) {}
+    explicit FigureState(FigureColor color) : type(FigureType::Pawn), color(color) {}
     FigureState(FigureType type, FigureColor color) : type(type), color(color) {}
 
     static FigureColor flipColor(FigureColor color)

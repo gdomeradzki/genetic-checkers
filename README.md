@@ -19,6 +19,7 @@
 - Qt5 (tested on 5.13.1)
 - g++ with C++17 (tested on 7.3.0)
 - cmake (tested on 3.10.2)
+- clang-tidy (tested on clang-tidy-9)
 
 ## Quick start
 

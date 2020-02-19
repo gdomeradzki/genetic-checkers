@@ -25,7 +25,7 @@ struct HeuristicsTests : public ::testing::Test
               minimaxDeep}
     {
     }
-    virtual ~HeuristicsTests() {}
+    ~HeuristicsTests() override = default;
     StrictMock<StrategyMock> strategyMock;
     StrictMock<CalculatorMock> calculatorMock;
     MetricsWithFactors metricsEarlyGame;
