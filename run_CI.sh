@@ -53,4 +53,16 @@ if [ $? -ne 0 ]; then
 fi
 
 show_green_text "Clang tidy succeed!"
+show_yellow_text "UT tests starts..."
+./build_ci/tests/checkers_ut
+if [ $? -ne 0 ]; then
+    show_red_text "UT tests failed."
+    clear_dir
+    exit 1
+fi
+show_green_text "UT tests succeed!"
+
 clear_dir
+
+show_green_text "CI passed, SHIP YOUR CHANGE ASAP!"
+exit 0
