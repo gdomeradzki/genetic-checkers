@@ -39,18 +39,6 @@ target_link_libraries(checkers_learning Threads::Threads)
 set_target_properties(checkers_learning PROPERTIES
     CXX_STANDARD 17)
 
-enable_testing()
-set(checkers_learning_tests ${PROJECT_NAME}_test)
-include_directories(../googletest/include)
-include_directories(../googlemock/include)
-
-set (test_sources
-    "tests/GeneticAlgorithmTests.cpp")
-add_executable(${checkers_learning_tests} ${test_sources})
-target_include_directories(${checkers_learning_tests} PUBLIC "../checkers_learning/include" "../checkers_AI/include" "../checkers_engine/include")
-target_link_libraries(${checkers_learning_tests} checkers_learning_static gtest_main gmock_main)
-set_target_properties(${checkers_learning_tests} PROPERTIES
-    CXX_STANDARD 17)
 
 
 
