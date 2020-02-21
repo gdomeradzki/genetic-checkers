@@ -27,8 +27,8 @@ GeneticAlgorithm::GeneticAlgorithm(
     , strategy{strategy}
     , metricCalculator{metricCalculator}
 {
-    assert(populationLimit > regenerationLimit);
-    assert(mutationsLimit < regenerationLimit);
+    assert(populationLimit > regenerationLimit); // NOLINT
+    assert(mutationsLimit < regenerationLimit); // NOLINT
 
     population.resize(populationLimit);
 }
@@ -96,8 +96,8 @@ void GeneticAlgorithm::crossbreeding()
     newPopulation.reserve(populationLimit);
     while (newPopulation.size() < populationLimit)
     {
-        int firstParentIdToBreed{-1};
-        int secondParentIdToBreed{-1};
+        unsigned int firstParentIdToBreed{0};
+        unsigned int secondParentIdToBreed{0};
 
         while (firstParentIdToBreed == secondParentIdToBreed)
         {
@@ -115,13 +115,13 @@ void GeneticAlgorithm::mutation()
 {
     for (auto i = 0u; i < mutationsLimit; i++)
     {
-        const int genotypeIndex = randomEngine.getRandomValue(0, populationLimit - 1);
-        auto& genotype = population[genotypeIndex];
-        const int numberOfGenesToMutate = randomEngine.getRandomValue(1, totalNumberOfGenes);
-        for (int j = 0; j < numberOfGenesToMutate; j++)
+        const unsigned int genotypeIndex = randomEngine.getRandomValue(0, populationLimit - 1);
+        auto& genotype = population.at(genotypeIndex);
+        const unsigned int numberOfGenesToMutate = randomEngine.getRandomValue(1, totalNumberOfGenes);
+        for (auto j{0u}; j < numberOfGenesToMutate; j++)
         {
-            const int geneToMutateIndex = randomEngine.getRandomValue(0, totalNumberOfGenes - 1);
-            genotype.genes[geneToMutateIndex].factor =
+            const unsigned int geneToMutateIndex = randomEngine.getRandomValue(0, totalNumberOfGenes - 1);
+            genotype.genes.at(geneToMutateIndex).factor =
                 randomEngine.getRandomValue(Calculator::minValue, Calculator::maxValue);
         }
     }
@@ -145,13 +145,13 @@ Heuristics GeneticAlgorithm::convertGenotypeToHeuristic(const Genotype& genotype
         switch (gene.gameStage)
         {
             case GameStage::EarlyGame:
-                metricsEarlyGame.insert(std::move(metricFactor));
+                metricsEarlyGame.insert(metricFactor);
                 break;
             case GameStage::MidGame:
-                metricsMidGame.insert(std::move(metricFactor));
+                metricsMidGame.insert(metricFactor);
                 break;
             case GameStage::LateGame:
-                metricsLateGame.insert(std::move(metricFactor));
+                metricsLateGame.insert(metricFactor);
                 break;
         }
     }
@@ -178,8 +178,8 @@ void GeneticAlgorithm::freeForAll()
             {
                 continue;
             }
-            Heuristics whitePlayerStrategy = convertGenotypeToHeuristic(population.at(whitePlayerIterator));
-            Heuristics blackPlayerStrategy = convertGenotypeToHeuristic(population.at(blackPlayerIterator));
+            auto whitePlayerStrategy = convertGenotypeToHeuristic(population.at(whitePlayerIterator));
+            auto blackPlayerStrategy = convertGenotypeToHeuristic(population.at(blackPlayerIterator));
             Battle battle{std::move(whitePlayerStrategy),
                           std::move(blackPlayerStrategy),
                           whitePlayerIterator,
@@ -213,10 +213,10 @@ void GeneticAlgorithm::freeForAll()
 Genotype GeneticAlgorithm::crossBreed(const Genotype& first, const Genotype& second) const
 {
     Genotype result;
-    for (int i = 0; i < totalNumberOfGenes; i++)
+    for (auto i{0u}; i < totalNumberOfGenes; i++)
     {
-        const auto minmax = std::minmax(first.genes[i].factor, second.genes[i].factor);
-        result.genes[i].factor = randomEngine.getRandomValue(minmax.first, minmax.second);
+        const auto minmax = std::minmax(first.genes.at(i).factor, second.genes.at(i).factor);
+        result.genes.at(i).factor = randomEngine.getRandomValue(minmax.first, minmax.second);
     }
     return result;
 }

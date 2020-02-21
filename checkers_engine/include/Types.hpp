@@ -4,8 +4,8 @@
 
 struct Position
 {
-    int row;
-    int col;
+    int row{0};
+    int col{0};
     bool operator<(const Position& other) const
     {
         if (row == other.row)

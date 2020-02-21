@@ -18,12 +18,12 @@ MainWindow::MainWindow(const GameState& gameState, QWidget* parent)
 {
     ui->setupUi(this);
 
-    frontBoard = new FrontBoard(gameState);
+    frontBoard = std::make_unique<FrontBoard>(gameState);
 
-    connect(frontBoard, &FrontBoard::signalMoveDone, [this](const Move& move) { emit signalMoveDone(move); });
+    connect(frontBoard.get(), &FrontBoard::signalMoveDone, [this](const Move& move) { emit signalMoveDone(move); });
 
     connect(ui->start, &QPushButton::clicked, [this]() { emit signalStartNewGame(); });
-    ui->frontBoard->layout()->addWidget(frontBoard);
+    ui->frontBoard->layout()->addWidget(frontBoard.get());
 
     for (const auto& strategy : strategyToStringMapping)
     {

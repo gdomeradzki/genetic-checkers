@@ -89,13 +89,13 @@ void FrontBoard::mousePressEvent(QMouseEvent* event)
                 return;
             }
         }
-        QDrag* drag = new QDrag(this);
+        QDrag drag{this};
         QPixmap map = pawn.color == FigureColor::White ? QPixmap(whitePawnImage) : QPixmap(":/pawn_black.png");
-        drag->setPixmap(map);
-        QMimeData* mimeData = new QMimeData();
+        drag.setPixmap(map);
+        QMimeData* mimeData = new QMimeData(); // NOLINT
         mimeData->setImageData(map);
-        drag->setMimeData(mimeData);
-        drag->exec();
+        drag.setMimeData(mimeData); // takes ownership of QMimeData object
+        drag.exec();
     }
 }
 

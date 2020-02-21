@@ -44,7 +44,7 @@ clear_dir
 build_ci $1
 
 show_yellow_text "Clang tidy starts..."
-./run-clang-tidy.py -p build_ci/ -header-filter='genetic-checkers/checkers_en*' genetic-checkers/checkers_en* -quiet
+./run-clang-tidy.py -p build_ci/ -header-filter='genetic-checkers/checkers_*' '^(?=.*genetic-checkers/checkers_)(?!.*tests).*' -quiet
 
 if [ $? -ne 0 ]; then
     show_red_text "Clang tidy failed."

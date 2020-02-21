@@ -23,8 +23,12 @@ class FrontBoard : public QWidget
 
 public:
     explicit FrontBoard(const GameState&, QWidget* parent = nullptr);
+    FrontBoard(const FrontBoard&) = delete;
+    FrontBoard(FrontBoard&&) = delete;
     ~FrontBoard() override;
 
+    FrontBoard& operator=(const FrontBoard&) = delete;
+    FrontBoard& operator=(FrontBoard&&) = delete;
     bool event(QEvent* e) override;
 
     void paintEvent(QPaintEvent* event) override;

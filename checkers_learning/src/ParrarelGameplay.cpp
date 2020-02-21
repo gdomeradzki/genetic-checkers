@@ -2,13 +2,15 @@
 
 #include <cassert>
 #include <future>
+#include <optional>
 #include <thread>
+
 #include "GamePlay.hpp"
 #include "Helpers.hpp"
 
-ParrarelGamePlay::ParrarelGamePlay(int maxNumberOfThreads) : maxNumberOfThreads{maxNumberOfThreads}
+ParrarelGamePlay::ParrarelGamePlay(unsigned int maxNumberOfThreads) : maxNumberOfThreads{maxNumberOfThreads}
 {
-    assert(maxNumberOfThreads > 0);
+    assert(maxNumberOfThreads > 0); // NOLINT
 }
 
 void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback)
@@ -17,13 +19,13 @@ void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback
     battleFinishCallback = std::move(callback);
     std::vector<std::thread> threads;
     Logger::log();
-    for (int i = 0; i < maxNumberOfThreads; i++)
+    for (auto i{0u}; i < maxNumberOfThreads; i++)
     {
         auto threadWrapper = [this](int threadId) { threadLoop(threadId); };
         std::thread t(threadWrapper, i);
         threads.emplace_back(std::move(t));
     }
-    for (int i = 0; i < maxNumberOfThreads; i++)
+    for (auto i{0u}; i < maxNumberOfThreads; i++)
     {
         if (threads.at(i).joinable())
         {
@@ -65,11 +67,17 @@ std::optional<Battle> ParrarelGamePlay::fetchNextBattle()
     {
         return std::nullopt;
     }
-    if (battlesLeft.size() % 10 == 0)
+    constexpr auto logBattleFrequency = 10;
+    if (battlesLeft.size() % logBattleFrequency == 0)
     {
         Logger::log("Battles left: ", battlesLeft.size());
     }
-    const auto lastBattle = battlesLeft.back();
+    auto lastBattle = std::move(battlesLeft.back());
     battlesLeft.pop_back();
-    return lastBattle;
+    Battle b{std::move(lastBattle.whitePlayerStrategy),
+             std::move(lastBattle.blackPlayerStrategy),
+             lastBattle.whitePlayerId,
+             lastBattle.blackPlayerId,
+             lastBattle.result};
+    return b;
 }

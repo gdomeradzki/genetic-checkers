@@ -14,7 +14,7 @@ template <typename... Args>
 void log(Args&&... args)
 {
     std::cout << currentTimeFormatted() << ": ";
-    (std::cout << ... << std::forward<Args>(args)) << std::endl << std::flush;
+    (std::cout << ... << std::forward<Args>(args)) << std::endl << std::flush; // NOLINT
 }
 template <typename... Args>
 void logRepeatLine(Args&&... args)

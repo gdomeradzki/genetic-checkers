@@ -94,14 +94,15 @@ void FrontendController::loadAI(const std::string& fileName)
         mainWindow.pushInfo(e.what());
         return;
     }
-    ai.reset(new Heuristics{strategy,
-                            metricsCalculator,
-                            std::move(metrics.metricsEarlyGame),
-                            std::move(metrics.metricsMidGame),
-                            std::move(metrics.metricsLateGame),
-                            totalPlayerFiguresNumber / 3,
-                            2 * totalPlayerFiguresNumber / 3,
-                            mainWindow.minimaxDeep()});
+    ai = std::make_unique<Heuristics>(
+        strategy,
+        metricsCalculator,
+        std::move(metrics.metricsEarlyGame),
+        std::move(metrics.metricsMidGame),
+        std::move(metrics.metricsLateGame),
+        totalPlayerFiguresNumber / 3,
+        2 * totalPlayerFiguresNumber / 3,
+        mainWindow.minimaxDeep());
     mainWindow.pushInfo(QString("File loaded: ") + QString::fromStdString(fileName));
 }
 MoveDecisionCallback FrontendController::getHumanDecisionCallback()

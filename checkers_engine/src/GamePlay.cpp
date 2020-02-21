@@ -6,7 +6,7 @@ bool operator==(const GameStateWithMove& first, const GameStateWithMove& second)
 }
 
 GamePlay::GamePlay(GameState& gameState, MoveDecisionCallback whiteStrategy, MoveDecisionCallback blackStrategy)
-    : currentGameState(gameState), whiteStrategy(whiteStrategy), blackStrategy(blackStrategy)
+    : currentGameState(gameState), whiteStrategy(std::move(whiteStrategy)), blackStrategy(std::move(blackStrategy))
 {
 }
 

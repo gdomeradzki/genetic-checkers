@@ -26,12 +26,13 @@
 - git clone https://github.com/gdomeradzki/genetic-checkers.git
 - git submodule init && git submodule update
 - mkdir build && cd build
-- cmake -DQt5_DIR=/opt/Qt5.13.1/5.13.1/gcc_64/lib/cmake/Qt5 ..
+- cmake -DQt5_DIR=<your_qt_path> ..
 - make all -j$(nproc)
 
+<your_qt_path> example: /opt/Qt5.14.1/5.14.1/gcc_64/lib/cmake/Qt5
 ## How to use
 
-There are seven build targets.
+There are five build targets.
 
 Runnable:
 - checkers_learning
@@ -42,9 +43,7 @@ Libraries
 - checkers_engine
 
 UT tests:
-- checkers_ai_test
-- checkers_engine_test
-- checkers_learning_test
+- checkers_ut
 
 Checkers_learning is an application responsible for running genetic-algorithm and selecting best specimen which can be loaded  by checkers_fronted application. Other modules are less important
 
@@ -73,10 +72,10 @@ Please feel free to create Pull Request
 ToDo list:
  * [ ] Generate and commit demonstrational AI file
  * [ ] Get rid of hardcoded genetic algorithm parameters - make them program parameters
- * [ ] Make one target for all UT tests
+ * [x] Make one target for all UT tests
  * [ ] Add possibility to load two, different AI in frontend
- * [ ] Do performance improvements (sanitizers etc.)
- * [ ] Check code in terms of memory leaks (by valgrind for example)
+ * [ ] Do performance improvements (valgrind, clang-tidy etc.)
+ * [ ] Check code in terms of memory leaks (valgrind, sanitizers)
  * [ ] Add ut coverage tool
  
  ## Contact

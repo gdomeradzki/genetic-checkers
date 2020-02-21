@@ -2,9 +2,10 @@
 
 namespace
 {
-constexpr int rowsCount()
+constexpr int rowsCountWithFigures()
 {
-    static_assert(boardSize == 8, "Not handled board size");
+    constexpr auto supportedBoardSize = 8;
+    static_assert(boardSize == supportedBoardSize, "Not handled board size");
     return 3;
 }
 } // namespace
@@ -12,7 +13,7 @@ constexpr int rowsCount()
 GameState::GameState()
 {
     gameState = Board{};
-    for (int row = 0; row < rowsCount(); row++)
+    for (int row = 0; row < rowsCountWithFigures(); row++)
     {
         for (auto col = 0u; col < boardSize; col += 2)
         {

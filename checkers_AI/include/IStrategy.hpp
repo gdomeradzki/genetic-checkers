@@ -6,8 +6,14 @@ using EvaluationFunction = std::function<int(const GameState&, FigureColor)>;
 class IStrategy
 {
 public:
+    IStrategy() = default;
+    IStrategy(const IStrategy&) = default;
+    IStrategy(IStrategy&&) = default;
     virtual ~IStrategy() = default;
 
-    virtual GameStateWithMove getMiniMaxMove(const GameState&, EvaluationFunction, FigureColor, int maxDepth) const = 0;
-    virtual GameStateWithMove getRandomMove(const std::vector<GameStateWithMove>&) const = 0;
+    IStrategy& operator=(const IStrategy&) = default;
+    IStrategy& operator=(IStrategy&&) = default;
+
+    virtual GameStateWithMove getMiniMaxMove(const GameState&, EvaluationFunction, FigureColor, unsigned int maxDepth)
+        const = 0;
 };

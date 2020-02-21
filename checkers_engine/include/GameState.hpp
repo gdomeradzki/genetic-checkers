@@ -12,8 +12,8 @@ constexpr auto totalPlayerFiguresNumber = boardSize * (boardSize - 2) / 4;
 
 struct Figure
 {
-    FigureState state;
-    Position position;
+    FigureState state{};
+    Position position{};
 };
 
 using Board = std::array<std::array<std::optional<FigureState>, boardSize>, boardSize>;

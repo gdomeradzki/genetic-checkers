@@ -5,13 +5,14 @@ std::string Logger::currentTimeFormatted()
 {
     time_t rawtime;
     struct tm* timeinfo;
-    char buffer[80];
+    constexpr auto bufferSize = 80u;
+    std::array<char, bufferSize> buffer{};
 
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    strftime(buffer, 80, "%H:%M:%S", timeinfo);
-    return buffer;
+    strftime(buffer.data(), bufferSize, "%H:%M:%S", timeinfo);
+    return std::string(buffer.data());
 }
 
 void File::serialize(const std::string& filename, const Genotype& genotype)

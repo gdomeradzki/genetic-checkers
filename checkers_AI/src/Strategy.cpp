@@ -2,11 +2,11 @@
 
 std::pair<int, GameStateWithMove> alphabeta(
     GameState gamestate,
-    EvaluationFunction evalFunction,
+    const EvaluationFunction& evalFunction,
     FigureColor callingPlayer,
     FigureColor currentPlayer,
-    const int maxDepth,
-    int currentDepth,
+    const unsigned int maxDepth,
+    unsigned int currentDepth,
     int alpha,
     int beta)
 {
@@ -71,25 +71,19 @@ std::pair<int, GameStateWithMove> alphabeta(
     }
 }
 
-GameStateWithMove Strategy::getRandomMove(const std::vector<GameStateWithMove>& possibleMoves) const
-{
-    int randomIndex = rand() % possibleMoves.size();
-    return possibleMoves.at(randomIndex);
-}
-
 GameStateWithMove Strategy::getMiniMaxMove(
     const GameState& gameState,
     EvaluationFunction evalFunction,
     FigureColor figureColor,
-    int maxDepth) const
+    unsigned int maxDepth) const
 {
     return alphabeta(
                gameState,
-               std::move(evalFunction),
+               evalFunction,
                figureColor,
                figureColor,
                maxDepth,
-               0,
+               0u,
                std::numeric_limits<int>::min(),
                std::numeric_limits<int>::max())
         .second;

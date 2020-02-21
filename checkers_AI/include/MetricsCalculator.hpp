@@ -4,12 +4,12 @@
 
 namespace Calculator
 {
-constexpr auto minValue = 0;
-constexpr auto maxValue = 100;
+constexpr auto minValue = 0u;
+constexpr auto maxValue = 100u;
 constexpr auto valueRange = maxValue - minValue;
 } // namespace Calculator
 class MetricsCalculator : public IMetricsCalculator
 {
 public:
-    int evaluate(const MetricsWithFactors& metricWithFactors, const GameState&, FigureColor) const override;
+    unsigned int evaluate(const MetricsWithFactors& metricWithFactors, const GameState&, FigureColor) const override;
 };

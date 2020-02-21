@@ -15,7 +15,9 @@ Checks:             '-*,
                     modernize-use-transparent-functors,
                     readability-redundant-member-init,
                     readability-identifier-naming,
-                    readability-container-size-empty'
+                    readability-container-size-empty,
+                    cppcoreguidelines-*,
+                    performance-*'
 CheckOptions:
   - key: readability-identifier-naming.TypedefCase
     value: CamelCase

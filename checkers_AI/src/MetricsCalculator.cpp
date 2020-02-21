@@ -13,26 +13,26 @@ int calcFiguresRatio(int maxPossiblePoints, int playerPoints, int opponentPoints
     if (playerPoints == 0)
     {
         const double playerFactor = static_cast<double>(opponentPoints) / static_cast<double>(maxPossiblePoints);
-        return halfRange - halfRange * playerFactor;
+        return halfRange - halfRange * playerFactor; // NOLINT
     }
 
     if (opponentPoints == 0)
     {
         const double opponentFactor = static_cast<double>(playerPoints) / static_cast<double>(maxPossiblePoints);
-        return halfRange + halfRange * opponentFactor;
+        return halfRange + halfRange * opponentFactor; // NOLINT
     }
 
     if (playerPoints > opponentPoints)
     {
         const double playerFactor = (static_cast<double>(playerPoints - 1) / static_cast<double>(opponentPoints)) /
             static_cast<double>(maxPossiblePoints);
-        return halfRange + halfRange * playerFactor;
+        return halfRange + halfRange * playerFactor; // NOLINT
     }
     else if (playerPoints < opponentPoints)
     {
         const double playerFactor = (static_cast<double>(opponentPoints - 1) / static_cast<double>(playerPoints)) /
             static_cast<double>(maxPossiblePoints);
-        return halfRange - halfRange * playerFactor;
+        return halfRange - halfRange * playerFactor; // NOLINT
     }
     else
     {
@@ -41,7 +41,7 @@ int calcFiguresRatio(int maxPossiblePoints, int playerPoints, int opponentPoints
 }
 void constrainFigures(Figures& figures, std::function<bool(const Figure&)> removeIfPredicate)
 {
-    figures.erase(std::remove_if(figures.begin(), figures.end(), removeIfPredicate), figures.end());
+    figures.erase(std::remove_if(figures.begin(), figures.end(), std::move(removeIfPredicate)), figures.end());
 }
 
 int pawnsNumberMetric(Figures player, Figures opponent)
@@ -176,9 +176,9 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     constrainFigures(whitePawns, [](const Figure& pawn) { return pawn.state.type != FigureType::Pawn; });
     constrainFigures(blackPawns, [](const Figure& pawn) { return pawn.state.type != FigureType::Pawn; });
 
-    int playerTotalSum = 0;
-    int maxDistanceSum = 0;
-    int minDistanceSum = 0;
+    unsigned int playerTotalSum = 0;
+    unsigned int maxDistanceSum = 0;
+    unsigned int minDistanceSum = 0;
     constexpr auto pawnsPerRow = boardSize / 2;
     for (size_t i = 0; i < whitePawns.size(); i++)
     {
@@ -205,15 +205,15 @@ int aggregatedDistanceToPromotionLineMetric(Figures player, Figures opponent)
     {
         return calcFiguresRatio(
             totalPlayerFiguresNumber,
-            round(whiteFactor * totalPlayerFiguresNumber),
-            round(blackFactor * totalPlayerFiguresNumber));
+            static_cast<int>(std::round(whiteFactor * totalPlayerFiguresNumber)),
+            static_cast<int>(std::round(blackFactor * totalPlayerFiguresNumber)));
     }
     else
     {
         return calcFiguresRatio(
             totalPlayerFiguresNumber,
-            round(blackFactor * totalPlayerFiguresNumber),
-            round(whiteFactor * totalPlayerFiguresNumber));
+            static_cast<int>(std::round(blackFactor * totalPlayerFiguresNumber)),
+            static_cast<int>(std::round(whiteFactor * totalPlayerFiguresNumber)));
     }
 }
 int numberOfUnoccupiedFieldsOnPromotionLineMetric(FigureColor playerColor, const GameState& gameState)
@@ -289,11 +289,11 @@ int figuresOnDiagonalMetric(Figures player, Figures opponent, FigureType type, i
 }
 int pawnsOnDiagonalMetric(Figures player, Figures opponent)
 {
-    return figuresOnDiagonalMetric(player, opponent, FigureType::Pawn, boardSize - 1);
+    return figuresOnDiagonalMetric(std::move(player), std::move(opponent), FigureType::Pawn, boardSize - 1);
 }
 int kingsOnDiagonalMetric(Figures player, Figures opponent)
 {
-    return figuresOnDiagonalMetric(player, opponent, FigureType::King, boardSize);
+    return figuresOnDiagonalMetric(std::move(player), std::move(opponent), FigureType::King, boardSize);
 }
 
 bool isDoubleDiagonalPosition(Position position)
@@ -455,7 +455,7 @@ int dogMetric(const GameState& gameState, FigureColor playerColor)
     return patternMetric(playerColor, whitePawnsAvailable, blackPawnsAvailable);
 }
 
-int MetricsCalculator::evaluate(
+unsigned int MetricsCalculator::evaluate(
     const std::set<MetricFactor>& metricWithFactors,
     const GameState& gameState,
     FigureColor playerColor) const
@@ -477,11 +477,11 @@ int MetricsCalculator::evaluate(
     }
 
     const auto metricsNumber = metricWithFactors.size();
-    int totalSum = 0;
+    unsigned int totalSum = 0;
 
     for (const auto& metricFactor : metricWithFactors)
     {
-        int metricValue = 0;
+        unsigned int metricValue = 0;
         switch (metricFactor.metric)
         {
             case Metric::PawnsNumber:

@@ -13,7 +13,7 @@ public:
 class RandomEngineMock : public IRandomEngine
 {
 public:
-    MOCK_METHOD(int, getRandomValue, (int, int), (const, override));
+    MOCK_METHOD(unsigned int, getRandomValue, (unsigned int, unsigned int), (const, override));
 };
 bool operator==(const Battle& first, const Battle& second)
 {

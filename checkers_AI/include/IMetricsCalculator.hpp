@@ -42,6 +42,12 @@ using MetricsWithFactors = std::set<MetricFactor>;
 class IMetricsCalculator
 {
 public:
+    IMetricsCalculator() = default;
+    IMetricsCalculator(const IMetricsCalculator&) = default;
+    IMetricsCalculator(IMetricsCalculator&&) = default;
     virtual ~IMetricsCalculator() = default;
-    virtual int evaluate(const MetricsWithFactors& metricWithFactors, const GameState&, FigureColor) const = 0;
+
+    IMetricsCalculator& operator=(const IMetricsCalculator&) = default;
+    IMetricsCalculator& operator=(IMetricsCalculator&&) = default;
+    virtual unsigned int evaluate(const MetricsWithFactors& metricWithFactors, const GameState&, FigureColor) const = 0;
 };

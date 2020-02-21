@@ -7,7 +7,7 @@
 class ParrarelGamePlay : public IParrarelGamePlay
 {
 public:
-    explicit ParrarelGamePlay(int maxNumberOfThreads);
+    explicit ParrarelGamePlay(unsigned int maxNumberOfThreads);
 
     void play(BattleList, BattleFinishCallback) override;
 
@@ -16,7 +16,7 @@ private:
 
     std::optional<Battle> fetchNextBattle();
 
-    const int maxNumberOfThreads;
+    const unsigned int maxNumberOfThreads;
     BattleFinishCallback battleFinishCallback;
     BattleList battlesLeft;
     std::mutex mutex;

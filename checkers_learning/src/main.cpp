@@ -11,12 +11,12 @@ using namespace std;
 
 int main(int, char*[])
 {
-    auto populationLimit = 10u;
-    auto regenerationLimit = 5u;
-    auto mutatiosLimit = 2u;
-    auto minimaxDeep = 2u;
-    auto generationsNumber = 5u;
-    int threadsNumber = std::thread::hardware_concurrency();
+    constexpr auto populationLimit = 10u;
+    constexpr auto regenerationLimit = 5u;
+    constexpr auto mutatiosLimit = 2u;
+    constexpr auto minimaxDeep = 2u;
+    constexpr auto generationsNumber = 5u;
+    auto threadsNumber = std::thread::hardware_concurrency();
     const std::string resultFile = "bestGenotype.txt";
 
     Logger::log("Using:");

@@ -9,7 +9,6 @@ class Heuristics
 {
 public:
     Heuristics() = delete;
-
     Heuristics(
         const IStrategy& strategy,
         const IMetricsCalculator& metricsCalculator,
@@ -22,7 +21,12 @@ public:
 
     ~Heuristics() = default;
 
+    Heuristics(Heuristics&&) = default;
+    Heuristics(const Heuristics&) = default;
+
+    Heuristics& operator=(Heuristics&&) = delete;
     Heuristics& operator=(const Heuristics&) = delete;
+
     bool operator==(const Heuristics&) const;
 
     GameStateWithMove getMove(const GameState&, FigureColor);

@@ -8,7 +8,7 @@ class RandomEngine : public IRandomEngine
 {
 public:
     explicit RandomEngine(std::mt19937& gen);
-    int getRandomValue(int from, int to) const override;
+    unsigned int getRandomValue(unsigned int from, unsigned int to) const override;
 
 private:
     std::mt19937& gen;

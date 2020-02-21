@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <memory>
 #include "PawnState.hpp"
 #include "Types.hpp"
 namespace Ui
@@ -25,6 +26,12 @@ public:
     explicit MainWindow(const GameState&, QWidget* parent = nullptr);
     ~MainWindow() override;
 
+    MainWindow(MainWindow&&) = delete;
+    MainWindow(const MainWindow&) = delete;
+
+    MainWindow& operator=(const MainWindow&) = delete;
+    MainWindow& operator=(MainWindow&&) = delete;
+
     void repaint();
     void syncTemporaryState();
     void blockPawnMoves(FigureColor color, bool block);
@@ -41,7 +48,7 @@ signals:
     void signalLoadMetrics(const std::string&);
 
 private:
-    FrontBoard* frontBoard;
+    std::unique_ptr<FrontBoard> frontBoard;
     const GameState& gameState;
     Ui::MainWindow* ui;
 };
