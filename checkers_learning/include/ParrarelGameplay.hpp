@@ -1,5 +1,6 @@
 #pragma once
 #include "IParrarelGameplay.hpp"
+#include "Types.hpp"
 
 #include <mutex>
 #include <optional>

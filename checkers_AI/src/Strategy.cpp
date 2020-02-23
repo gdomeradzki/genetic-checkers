@@ -1,7 +1,7 @@
 #include "Strategy.hpp"
 
 std::pair<int, GameStateWithMove> alphabeta(
-    GameState gamestate,
+    const GameState& gamestate,
     const EvaluationFunction& evalFunction,
     FigureColor callingPlayer,
     FigureColor currentPlayer,

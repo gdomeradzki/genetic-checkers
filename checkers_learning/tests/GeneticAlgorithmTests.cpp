@@ -63,7 +63,8 @@ struct GeneticAlgorithmTests : public ::testing::Test
               parrarelGamePlayMock,
               randomEngineMock,
               strategyMock,
-              calculatorMock}
+              calculatorMock,
+              [](OperationsDone, OperationsTotal) {}}
     {
     }
     void mockRandomCreation()

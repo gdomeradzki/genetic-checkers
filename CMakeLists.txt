@@ -5,6 +5,7 @@ project(genetic-checkers)
 add_subdirectory("${PROJECT_SOURCE_DIR}/googletest")
 
 add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-gnu-zero-variadic-macro-arguments)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 add_subdirectory(checkers_engine)
 add_subdirectory(checkers_frontend)

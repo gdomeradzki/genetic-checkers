@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+
 #include "IMetricsCalculator.hpp"
 
 enum class GameStage
@@ -89,3 +91,7 @@ struct Genotype
         Gene{GameStage::LateGame, Metric::Dog}};
     int fitness{0};
 };
+
+using OperationsDone = unsigned int;
+using OperationsTotal = unsigned int;
+using ProgressCallback = std::function<void(OperationsDone, OperationsTotal)>;

@@ -17,7 +17,8 @@ GeneticAlgorithm::GeneticAlgorithm(
     IParrarelGamePlay& pararrelGameplay,
     IRandomEngine& randomEngine,
     IStrategy& strategy,
-    IMetricsCalculator& metricCalculator)
+    IMetricsCalculator& metricCalculator,
+    ProgressCallback progressCallback)
     : populationLimit{populationLimit}
     , regenerationLimit{regenerationLimit}
     , mutationsLimit{mutationsLimit}
@@ -26,6 +27,7 @@ GeneticAlgorithm::GeneticAlgorithm(
     , randomEngine{randomEngine}
     , strategy{strategy}
     , metricCalculator{metricCalculator}
+    , progressCallback{std::move(progressCallback)}
 {
     assert(populationLimit > regenerationLimit); // NOLINT
     assert(mutationsLimit < regenerationLimit); // NOLINT
@@ -35,9 +37,9 @@ GeneticAlgorithm::GeneticAlgorithm(
 
 void GeneticAlgorithm::run(int loops)
 {
-    for (int i = 0; i < loops; i++)
+    totalGenerations = loops;
+    for (currentGeneration = 0; currentGeneration < totalGenerations; currentGeneration++)
     {
-        Logger::log("Generation number: ", i + 1);
         selection();
         crossbreeding();
         mutation();
@@ -188,26 +190,30 @@ void GeneticAlgorithm::freeForAll()
             battleList.emplace_back(std::move(battle));
         }
     }
-    pararrelGameplay.play(std::move(battleList), [this](const Battle& battle) {
-        const std::lock_guard lockGuard{finishCallbackMutex};
-        constexpr auto pointsForWin = 3;
-        constexpr auto pointsForDraw = 1;
-        switch (battle.result)
-        {
-            case GameResult::WhiteWin:
-                population.at(battle.whitePlayerId).fitness += pointsForWin;
-                break;
-            case GameResult::BlackWin:
-                population.at(battle.blackPlayerId).fitness += pointsForWin;
-                break;
-            case GameResult::Draw:
-                population.at(battle.whitePlayerId).fitness += pointsForDraw;
-                population.at(battle.blackPlayerId).fitness += pointsForDraw;
-                break;
-            default:
-                throw std::runtime_error("Game should have an end!");
-        }
-    });
+    unsigned int battlesDone{0};
+    pararrelGameplay.play(
+        std::move(battleList), [this, &battlesDone, totalBattles = battleList.size()](const Battle& battle) {
+            const std::lock_guard lockGuard{finishCallbackMutex};
+
+            logProgressFromOneGenetation(battlesDone++, totalBattles);
+            constexpr auto pointsForWin = 3;
+            constexpr auto pointsForDraw = 1;
+            switch (battle.result)
+            {
+                case GameResult::WhiteWin:
+                    population.at(battle.whitePlayerId).fitness += pointsForWin;
+                    break;
+                case GameResult::BlackWin:
+                    population.at(battle.blackPlayerId).fitness += pointsForWin;
+                    break;
+                case GameResult::Draw:
+                    population.at(battle.whitePlayerId).fitness += pointsForDraw;
+                    population.at(battle.blackPlayerId).fitness += pointsForDraw;
+                    break;
+                default:
+                    throw std::runtime_error("Game should have an end!");
+            }
+        });
 }
 
 Genotype GeneticAlgorithm::crossBreed(const Genotype& first, const Genotype& second) const
@@ -219,4 +225,9 @@ Genotype GeneticAlgorithm::crossBreed(const Genotype& first, const Genotype& sec
         result.genes.at(i).factor = randomEngine.getRandomValue(minmax.first, minmax.second);
     }
     return result;
+}
+
+void GeneticAlgorithm::logProgressFromOneGenetation(OperationsDone done, OperationsTotal total) const
+{
+    progressCallback(done + currentGeneration * total, total * totalGenerations);
 }

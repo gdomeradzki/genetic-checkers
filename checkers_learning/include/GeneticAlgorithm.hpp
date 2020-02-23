@@ -23,7 +23,8 @@ public:
         IParrarelGamePlay& pararrelGameplay,
         IRandomEngine& randomEngine,
         IStrategy& strategy,
-        IMetricsCalculator& metricCalculator);
+        IMetricsCalculator& metricCalculator,
+        ProgressCallback progressCallback);
 
     void run(int loops);
 
@@ -42,6 +43,10 @@ private:
     void freeForAll();
     Genotype crossBreed(const Genotype&, const Genotype&) const;
 
+    void logProgressFromOneGenetation(OperationsDone, OperationsTotal) const;
+
+    unsigned int currentGeneration{0};
+    unsigned int totalGenerations{0};
     Population population;
     std::mutex finishCallbackMutex;
 
@@ -54,4 +59,5 @@ private:
     IRandomEngine& randomEngine;
     IStrategy& strategy;
     IMetricsCalculator& metricCalculator;
+    ProgressCallback progressCallback;
 };

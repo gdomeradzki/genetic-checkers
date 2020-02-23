@@ -67,17 +67,12 @@ std::optional<Battle> ParrarelGamePlay::fetchNextBattle()
     {
         return std::nullopt;
     }
-    constexpr auto logBattleFrequency = 10;
-    if (battlesLeft.size() % logBattleFrequency == 0)
-    {
-        Logger::log("Battles left: ", battlesLeft.size());
-    }
+
     auto lastBattle = std::move(battlesLeft.back());
     battlesLeft.pop_back();
-    Battle b{std::move(lastBattle.whitePlayerStrategy),
-             std::move(lastBattle.blackPlayerStrategy),
-             lastBattle.whitePlayerId,
-             lastBattle.blackPlayerId,
-             lastBattle.result};
-    return b;
+    return Battle{std::move(lastBattle.whitePlayerStrategy),
+                  std::move(lastBattle.blackPlayerStrategy),
+                  lastBattle.whitePlayerId,
+                  lastBattle.blackPlayerId,
+                  lastBattle.result};
 }
