@@ -194,7 +194,6 @@ void GeneticAlgorithm::freeForAll()
     pararrelGameplay.play(
         std::move(battleList), [this, &battlesDone, totalBattles = battleList.size()](const Battle& battle) {
             const std::lock_guard lockGuard{finishCallbackMutex};
-
             logProgressFromOneGenetation(battlesDone++, totalBattles);
             constexpr auto pointsForWin = 3;
             constexpr auto pointsForDraw = 1;

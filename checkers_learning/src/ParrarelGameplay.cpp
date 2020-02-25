@@ -18,11 +18,9 @@ void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback
     battlesLeft = std::move(battleList);
     battleFinishCallback = std::move(callback);
     std::vector<std::thread> threads;
-    Logger::log();
     for (auto i{0u}; i < maxNumberOfThreads; i++)
     {
-        auto threadWrapper = [this](int threadId) { threadLoop(threadId); };
-        std::thread t(threadWrapper, i);
+        std::thread t(&ParrarelGamePlay::threadLoop, this);
         threads.emplace_back(std::move(t));
     }
     for (auto i{0u}; i < maxNumberOfThreads; i++)
@@ -32,18 +30,15 @@ void ParrarelGamePlay::play(BattleList battleList, BattleFinishCallback callback
             threads.at(i).join();
         }
     }
-    Logger::log("");
 }
 
-void ParrarelGamePlay::threadLoop(int threadId)
+void ParrarelGamePlay::threadLoop()
 {
-    Logger::log("Thread #", threadId, " starts");
     while (true)
     {
         auto battle = fetchNextBattle();
         if (!battle)
         {
-            Logger::log("Thread #", threadId, " finishes");
             break;
         }
         GameState gameState;

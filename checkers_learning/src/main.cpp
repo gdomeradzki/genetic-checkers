@@ -11,11 +11,11 @@ using namespace std;
 
 int main(int, char*[])
 {
-    constexpr auto populationLimit = 10u;
-    constexpr auto regenerationLimit = 5u;
-    constexpr auto mutatiosLimit = 2u;
-    constexpr auto minimaxDeep = 2u;
-    constexpr auto generationsNumber = 5u;
+    constexpr auto populationLimit = 20u;
+    constexpr auto regenerationLimit = 15u;
+    constexpr auto mutatiosLimit = 3u;
+    constexpr auto minimaxDeep = 5u;
+    constexpr auto generationsNumber = 50u;
     const auto threadsNumber = std::thread::hardware_concurrency();
     const std::string resultFile = "bestGenotype.txt";
 
@@ -29,29 +29,7 @@ int main(int, char*[])
     Logger::log();
     MetricsCalculator metricCalculator;
 
-    auto startTime = std::chrono::high_resolution_clock::now();
-    unsigned int prevProgress{0};
-    ProgressCallback progressCallback = [&startTime,
-                                         &prevProgress](OperationsDone actionsDone, OperationsTotal totalActions) {
-        constexpr auto totalPercents = 100u;
-        const auto percentDone = actionsDone * totalPercents / totalActions;
-        const auto now = std::chrono::high_resolution_clock::now();
-        const auto exectionTimeInSeconds = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count();
-        if (percentDone == prevProgress)
-        {
-            return;
-        }
-        prevProgress = percentDone;
-        const auto estimatedTimeInSeconds = totalPercents * exectionTimeInSeconds / percentDone;
-        Logger::log(
-            "Progress: ",
-            percentDone,
-            "% Execution time: ",
-            exectionTimeInSeconds,
-            "s Estimated time: ",
-            estimatedTimeInSeconds,
-            "s");
-    };
+    const auto startTime = std::chrono::high_resolution_clock::now();
 
     ParrarelGamePlay parrarelGameplay{threadsNumber};
     Strategy strategy;
@@ -67,7 +45,7 @@ int main(int, char*[])
                              randomEngine,
                              strategy,
                              metricCalculator,
-                             std::move(progressCallback)};
+                             Logger::getProgressLogCallback(startTime)};
     genetic.createRandomPopulation();
     genetic.run(generationsNumber);
 

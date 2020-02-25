@@ -45,3 +45,39 @@ void File::serialize(const std::string& filename, const Genotype& genotype)
 
     Logger::log("Best genotype saved: ", filename);
 }
+
+std::function<void(OperationsDone, OperationsTotal)> Logger::getProgressLogCallback(
+    const std::chrono::high_resolution_clock::time_point& startTime)
+{
+    return [&startTime](OperationsDone actionsDone, OperationsTotal totalActions) {
+        if (actionsDone == 0) return;
+        const auto now = std::chrono::high_resolution_clock::now();
+        const auto executionTimeInSeconds = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count();
+
+        const auto estimatedTimeLeftInSeconds =
+            totalActions * executionTimeInSeconds / actionsDone - executionTimeInSeconds;
+        constexpr auto timeUnits = 60u;
+        std::string timeUnit = "sec";
+        unsigned int formattedTime = estimatedTimeLeftInSeconds;
+        if (estimatedTimeLeftInSeconds / (timeUnits * timeUnits) > 0)
+        {
+            timeUnit = "h";
+            formattedTime = estimatedTimeLeftInSeconds / (timeUnits * timeUnits);
+        }
+        else if (estimatedTimeLeftInSeconds / timeUnits > 0)
+        {
+            timeUnit = "min";
+            formattedTime = estimatedTimeLeftInSeconds / timeUnits;
+        }
+        Logger::log(
+            "Execution time: ",
+            executionTimeInSeconds,
+            "s\tEstimated time left: ",
+            formattedTime,
+            timeUnit,
+            "\t\tActions:",
+            actionsDone,
+            "/",
+            totalActions);
+    };
+}

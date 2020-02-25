@@ -13,7 +13,7 @@ public:
     void play(BattleList, BattleFinishCallback) override;
 
 private:
-    void threadLoop(int);
+    void threadLoop();
 
     std::optional<Battle> fetchNextBattle();
 
