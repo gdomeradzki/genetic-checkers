@@ -1,0 +1,6 @@
+1
+    Population Limit: 12
+    RegenerationLimit Limit: 7
+    MutatiosLimit Limit: 2
+    MinimaxDeep Limit: 5
+    GenerationsNumber Limit: 50
