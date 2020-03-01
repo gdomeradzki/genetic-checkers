@@ -1,4 +1,5 @@
 #include "GamePlay.hpp"
+#include <algorithm>
 
 bool operator==(const GameStateWithMove& first, const GameStateWithMove& second)
 {
